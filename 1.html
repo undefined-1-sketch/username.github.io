@@ -1,0 +1,301 @@
+ 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给你的生日祝福</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "Apple Color Emoji", sans-serif; /* 新增可爱字体 */
+            text-align: center;
+            background-color: #fff8e1;
+            padding: 40px 20px;
+            color: #e65100;
+            position: relative;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffcc80, #ff9800);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(230, 81, 0, 0.3);
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .message {
+            font-size: 1.5rem;
+            margin: 30px 0;
+            line-height: 1.8;
+        }
+        .btn {
+            background-color: white;
+            color: #e65100;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #fff3e0;
+            transform: scale(1.05);
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+        }
+        
+        /* 小蛋糕样式 */
+        .cake-container {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .cake {
+            width: 100%;
+            animation: bounce 0s ease-in-out;
+        }
+        .cake-top {
+            height: 30px;
+            background: linear-gradient(45deg, #ff9999, #ff6666);
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .cherry {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #ff3333;
+            border-radius: 50%;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 -2px 2px rgba(0,0,0,0.1);
+        }
+        .cherry-stem {
+            position: absolute;
+            width: 6px;
+            height: 10px;
+            background-color: #339933;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50% 50% 0 0;
+        }
+        .cake-middle {
+            height: 20px;
+            background-color: #ffdd99;
+            position: relative;
+        }
+        .cake-bottom {
+            height: 20px;
+            background-color: #ffbb66;
+            border-radius: 0 0 10px 10px;
+        }
+        .candle {
+            position: absolute;
+            width: 4px;
+            height: 15px;
+            background-color: #fff;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            z-index: 2;
+        }
+        .flame {
+            position: absolute;
+            width: 6px;
+            height: 8px;
+            background: linear-gradient(to bottom, #ff9933, #ff3333);
+            border-radius: 50% 50% 0 0;
+            top: -23px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flame 1.5s infinite;
+        }
+        @keyframes flame {
+            0%, 100% {
+                height: 8px;
+            }
+            50% {
+                height: 12px;
+            }
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* 选择题样式 */
+        .question-container {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(230, 81, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 9;
+        }
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #e65100;
+        }
+        .options {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .option {
+            flex: 1;
+            padding: 12px 0;
+            background-color: #fff8e1;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: #e65100;
+            border: 2px solid #ffcc80;
+        }
+        .option:hover {
+            background-color: #ffcc80;
+            color: white;
+            transform: scale(1.05);
+        }
+        .reply {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            min-height: 30px;
+            color: #e65100;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ 生日快乐！[小淞] ✨</h1>
+        <div class="message">
+            你说以前很少过生日，<br>
+            那今年我陪你过～<br><br>
+            新的一年，我只愿你：<br>
+            ✨三角洲把把出红（打字的时候其实我没绷住）<br>
+            ✨在这快节奏的时代坚守自己的那颗纯真的心 <br>
+            ✨ 身体安康，天天开心，没有烦恼！
+        </div>
+        <button class="btn" id="showConfetti">点击撒花～</button>
+    </div>
+    
+    <!-- 小蛋糕容器 -->
+    <div class="cake-container" id="cakeContainer">
+        <div class="cake">
+            <div class="cake-top">
+                <div class="cherry"></div>
+                <div class="cherry-stem"></div>
+                <div class="candle"></div>
+                <div class="flame"></div>
+            </div>
+            <div class="cake-middle"></div>
+            <div class="cake-bottom"></div>
+        </div>
+    </div>
+    
+    <!-- 选择题容器 -->
+    <div class="question-container" id="questionContainer">
+        <div class="question">你今天开心吗？</div>
+        <div class="options">
+            <div class="option" id="optionHappy">开心 😊</div>
+            <div class="option" id="optionUnhappy">不开心 😔</div>
+        </div>
+        <div class="reply" id="reply"></div>
+    </div>
+
+    <script>
+        // 点击按钮触发 confetti 效果、蛋糕动画和显示选择题
+        document.getElementById('showConfetti').addEventListener('click', function() {
+            const colors = ['#ff5722', '#ff9800', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0'];
+            const body = document.body;
+            const cakeContainer = document.getElementById('cakeContainer');
+            const questionContainer = document.getElementById('questionContainer');
+            
+            // 显示蛋糕和选择题
+            cakeContainer.style.opacity = '1';
+            questionContainer.style.opacity = '1';
+            const cake = document.querySelector('.cake');
+            cake.style.animation = 'bounce 0.5s ease-in-out infinite';
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `fall ${2 + Math.random() * 3}s linear forwards`;
+                body.appendChild(confetti);
+                
+                // 动画结束后移除元素
+                setTimeout(() => {
+                    body.removeChild(confetti);
+                }, 5000);
+            }
+            
+            // 添加 confetti 动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fall {
+                    to {
+                        top: 100vh;
+                        transform: rotate(360deg);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        
+        // 选择题交互
+        document.getElementById('optionHappy').addEventListener('click', function() {
+            document.getElementById('reply').textContent = '我也很开心呀～ 😊';
+            document.getElementById('reply').style.display = 'block';
+            this.style.backgroundColor = '#4caf50'; // 开心选项变绿色
+            this.style.color = 'white';
+            this.style.borderColor = '#4caf50';
+        });
+        
+        document.getElementById('optionUnhappy').addEventListener('click', function() {
+            document.getElementById('reply').textContent = '哼，为什么不开心呀？告诉我嘛～ 😢';
+            document.getElementById('reply').style.display = 'block';
+            this.style.backgroundColor = '#ff5722'; // 不开心选项变红色
+            this.style.color = 'white';
+            this.style.borderColor = '#ff5722';
+        });
+    </script>
+</body>
+</html>
